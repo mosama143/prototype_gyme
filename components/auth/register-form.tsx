@@ -1,80 +1,103 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Mail, Lock, User, Eye, EyeOff, Dumbbell, Upload } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useToast } from "@/hooks/use-toast"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Mail, Lock, User, Eye, EyeOff, Dumbbell, Upload } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export function RegisterForm() {
-  const { toast } = useToast()
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [profileImage, setProfileImage] = useState<string | null>(null)
+  const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     fullName: "",
+    gender: "",
     email: "",
+    confirmEmail: "",
     password: "",
     confirmPassword: "",
-  })
-  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  });
+
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const [showGender, setShowGender] = useState(false);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors: { [key: string]: string } = {}
+    const newErrors: { [key: string]: string } = {};
 
     if (!formData.fullName) {
-      newErrors.fullName = "Full name is required"
+      newErrors.fullName = "Full name is required";
+    }
+
+    if (!formData.gender) {
+      newErrors.gender = "Gender is required";
     }
 
     if (!formData.email) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid"
+      newErrors.email = "Email is invalid";
+    }
+    if (!formData.confirmEmail) {
+      newErrors.confirmEmail = "Please confirm your email";
+    } else if (formData.email !== formData.confirmEmail) {
+      newErrors.confirmEmail = "Emails do not match";
     }
 
     if (!formData.password) {
-      newErrors.password = "Password is required"
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters"
+      newErrors.password = "Password must be at least 6 characters";
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Please confirm your password"
+      newErrors.confirmPassword = "Please confirm your password";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match"
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (validateForm()) {
       toast({
         title: "Account created successfully!",
         description: "Welcome to FitZone. Let's start your fitness journey!",
-      })
+      });
       // Handle registration logic here
     }
-  }
+  };
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-md mx-auto">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div
+        className={`max-w-sm sm:max-w-md lg:max-w-lg mx-auto transition-all duration-1000 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
         {/* Logo & Title */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
@@ -84,18 +107,29 @@ export function RegisterForm() {
             </span>
           </Link>
           <h1 className="text-4xl font-black text-white mb-2">Join FitZone</h1>
-          <p className="text-gray-400">Create your account and start your transformation</p>
+          <p className="text-gray-400">
+            Create your account and start your transformation
+          </p>
         </div>
 
         {/* Register Form */}
-        <form onSubmit={handleSubmit} className="bg-white/5 border border-white/10 rounded-2xl p-8">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white/10 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-[0_0_0.5px_0.5px_#84FF00]"
+        >
           {/* Profile Picture Upload */}
           <div className="mb-6">
-            <label className="block text-sm font-bold text-white mb-2">Profile Picture (Optional)</label>
-            <div className="flex items-center gap-4">
+            <label className="block text-sm font-bold text-white mb-2">
+              Profile Picture (Optional)
+            </label>
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               <div className="w-20 h-20 rounded-full bg-white/5 border-2 border-white/10 overflow-hidden flex items-center justify-center">
                 {profileImage ? (
-                  <img src={profileImage || "/placeholder.svg"} alt="Profile" className="w-full h-full object-cover" />
+                  <img
+                    src={profileImage || "/placeholder.svg"}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <User className="h-10 w-10 text-gray-400" />
                 )}
@@ -105,14 +139,22 @@ export function RegisterForm() {
                   <Upload className="h-4 w-4 text-gray-400" />
                   <span className="text-sm text-gray-400">Upload Photo</span>
                 </div>
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
               </label>
             </div>
           </div>
 
           {/* Full Name Field */}
           <div className="mb-6">
-            <label htmlFor="fullName" className="block text-sm font-bold text-white mb-2">
+            <label
+              htmlFor="fullName"
+              className="block text-sm font-bold text-white mb-2"
+            >
               Full Name
             </label>
             <div className="relative">
@@ -121,19 +163,26 @@ export function RegisterForm() {
                 type="text"
                 id="fullName"
                 value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
                 className={`w-full bg-white/5 border ${
                   errors.fullName ? "border-red-500" : "border-white/10"
                 } rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#84FF00] transition-colors`}
                 placeholder="John Doe"
               />
             </div>
-            {errors.fullName && <p className="text-red-400 text-sm mt-2">{errors.fullName}</p>}
+            {errors.fullName && (
+              <p className="text-red-400 text-sm mt-2">{errors.fullName}</p>
+            )}
           </div>
 
           {/* Email Field */}
           <div className="mb-6">
-            <label htmlFor="email" className="block text-sm font-bold text-white mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-bold text-white mb-2"
+            >
               Email Address
             </label>
             <div className="relative">
@@ -142,19 +191,54 @@ export function RegisterForm() {
                 type="email"
                 id="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 className={`w-full bg-white/5 border ${
                   errors.email ? "border-red-500" : "border-white/10"
                 } rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#84FF00] transition-colors`}
                 placeholder="your@email.com"
               />
             </div>
-            {errors.email && <p className="text-red-400 text-sm mt-2">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-400 text-sm mt-2">{errors.email}</p>
+            )}
+          </div>
+          {/* Confirm Email Field */}
+          <div className="mb-6">
+            <label
+              htmlFor="confirmEmail"
+              className="block text-sm font-bold text-white mb-2"
+            >
+              Confirm Email
+            </label>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                type="email"
+                id="confirmEmail"
+                value={formData.confirmEmail}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmEmail: e.target.value })
+                }
+                className={`w-full bg-white/5 border ${
+                  errors.confirmEmail ? "border-red-500" : "border-white/10"
+                } rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 
+      focus:outline-none focus:border-[#84FF00] transition-colors`}
+                placeholder="Re-enter your email"
+              />
+            </div>
+            {errors.confirmEmail && (
+              <p className="text-red-400 text-sm mt-2">{errors.confirmEmail}</p>
+            )}
           </div>
 
           {/* Password Field */}
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-bold text-white mb-2">
+            <label
+              htmlFor="password"
+              className="block text-sm font-bold text-white mb-2"
+            >
               Password
             </label>
             <div className="relative">
@@ -163,7 +247,9 @@ export function RegisterForm() {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 className={`w-full bg-white/5 border ${
                   errors.password ? "border-red-500" : "border-white/10"
                 } rounded-xl pl-12 pr-12 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#84FF00] transition-colors`}
@@ -174,15 +260,24 @@ export function RegisterForm() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
               >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
               </button>
             </div>
-            {errors.password && <p className="text-red-400 text-sm mt-2">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-400 text-sm mt-2">{errors.password}</p>
+            )}
           </div>
 
           {/* Confirm Password Field */}
           <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block text-sm font-bold text-white mb-2">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-bold text-white mb-2"
+            >
               Confirm Password
             </label>
             <div className="relative">
@@ -191,7 +286,9 @@ export function RegisterForm() {
                 type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
                 className={`w-full bg-white/5 border ${
                   errors.confirmPassword ? "border-red-500" : "border-white/10"
                 } rounded-xl pl-12 pr-12 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#84FF00] transition-colors`}
@@ -202,12 +299,78 @@ export function RegisterForm() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
               >
-                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showConfirmPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
               </button>
             </div>
-            {errors.confirmPassword && <p className="text-red-400 text-sm mt-2">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-400 text-sm mt-2">
+                {errors.confirmPassword}
+              </p>
+            )}
           </div>
 
+          {/* Gender Selection */}
+          <div className="mb-6">
+            <label className="block text-sm font-bold text-white mb-2">
+              Gender
+            </label>
+
+            <div className="relative">
+              {/* Trigger */}
+              <button
+                type="button"
+                onClick={() => setShowGender((prev) => !prev)}
+                className="w-full bg-black/40 border border-[#84FF00] rounded-xl px-4 py-3 text-white flex justify-between items-center hover:bg-black/50 transition-colors"
+              >
+                {formData.gender
+                  ? formData.gender.charAt(0).toUpperCase() +
+                    formData.gender.slice(1)
+                  : "Select your gender"}
+
+                <svg
+                  className={`h-5 w-5 text-[#84FF00] transition-transform ${
+                    showGender ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              {/* Dropdown */}
+              {showGender && (
+                <div className="absolute mt-2 w-full bg-black/80 backdrop-blur-xl border border-[#84FF00]/40 rounded-xl shadow-[0_0_20px_#84FF00] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  {["male", "female", "other"].map((g) => (
+                    <div
+                      key={g}
+                      onClick={() => {
+                        setFormData({ ...formData, gender: g });
+                        setShowGender(false);
+                      }}
+                      className="px-4 py-3 text-white hover:bg-[#84FF00]/20 cursor-pointer transition-colors"
+                    >
+                      {g.charAt(0).toUpperCase() + g.slice(1)}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {errors.gender && (
+              <p className="text-red-400 text-sm mt-2">{errors.gender}</p>
+            )}
+          </div>
           {/* Sign Up Button */}
           <Button
             type="submit"
@@ -230,7 +393,10 @@ export function RegisterForm() {
           <div className="text-center">
             <p className="text-gray-400">
               Already have an account?{" "}
-              <Link href="/login" className="text-[#84FF00] hover:text-[#84FF00]/80 font-bold transition-colors">
+              <Link
+                href="/login"
+                className="text-[#84FF00] hover:text-[#84FF00]/80 font-bold transition-colors"
+              >
                 Login
               </Link>
             </p>
@@ -238,5 +404,5 @@ export function RegisterForm() {
         </form>
       </div>
     </div>
-  )
+  );
 }
