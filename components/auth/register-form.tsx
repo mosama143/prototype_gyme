@@ -351,7 +351,7 @@ export function RegisterForm() {
               {/* Dropdown */}
               {showGender && (
                 <div className="absolute mt-2 w-full bg-black/80 backdrop-blur-xl border border-[#84FF00]/40 rounded-xl shadow-[0_0_20px_#84FF00] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                  {["male", "female", "other"].map((g) => (
+                  {["male", "female"].map((g) => (
                     <div
                       key={g}
                       onClick={() => {

@@ -34,8 +34,8 @@ export default function RegisterPage() {
         style={{
           background: `radial-gradient(
             circle 350px at ${mousePos.x}px ${mousePos.y}px,
-            rgba(0,0,0,0.40) 0%,     /* ← المنطقة تحت الماوس */
-            rgba(0,0,0,0.80) 70%     /* ← بقية الشاشة */
+            rgba(0,0,0,0.25) 0%,     /* ← المنطقة تحت الماوس */
+            rgba(0,0,0,0.85) 70%     /* ← بقية الشاشة */
           )`
         }}
       />

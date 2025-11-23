@@ -69,7 +69,7 @@ export function LoginForm() {
             </span>
           </Link>
           <h1 className="text-4xl font-black text-white mb-2">Welcome Back</h1>
-          <p className="text-gray-400">
+          <p className="text-white">
             Login to continue your fitness journey
           </p>
         </div>
@@ -77,7 +77,7 @@ export function LoginForm() {
         {/* Login Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white/10 border border-/10 rounded-2xl p-8  shadow-[0_0_0.5px_0.5px_#84FF00] "
+          className="bg-white/5 border border-/10 rounded-2xl p-8  shadow-[0_0_0.5px_0.5px_#84FF00] "
         >
           {/* Email Field */}
           <div className="mb-6">
@@ -88,7 +88,7 @@ export function LoginForm() {
               Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
               <input
                 type="email"
                 id="email"
@@ -98,7 +98,7 @@ export function LoginForm() {
                 }
                 className={`w-full bg-white/5 border ${
                   errors.email ? "border-red-500" : "border-white/10"
-                } rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#84FF00] transition-colors`}
+                } rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-white focus:outline-none focus:border-[#84FF00] transition-colors`}
                 placeholder="your@email.com"
               />
             </div>
@@ -116,7 +116,7 @@ export function LoginForm() {
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
@@ -126,13 +126,13 @@ export function LoginForm() {
                 }
                 className={`w-full bg-white/5 border ${
                   errors.password ? "border-red-500" : "border-white/10"
-                } rounded-xl pl-12 pr-12 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#84FF00] transition-colors`}
+                } rounded-xl pl-12 pr-12 py-3 text-white placeholder:text-white focus:outline-none focus:border-[#84FF00] transition-colors`}
                 placeholder="Enter your password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-white transition-colors"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" />
@@ -204,13 +204,13 @@ export function LoginForm() {
               <div className="w-full border-t border-white/10"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-black text-gray-400">OR</span>
+              <span className="px-4 bg-black text-white">OR</span>
             </div>
           </div>
 
           {/* Sign Up Link */}
           <div className="text-center">
-            <p className="text-gray-400">
+            <p className="text-white">
               Don't have an account?{" "}
               <Link
                 href="/register"
