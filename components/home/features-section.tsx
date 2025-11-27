@@ -1,48 +1,48 @@
-import { Dumbbell, Users, Calendar, TrendingUp, Award, Clock } from "lucide-react"
+import { Dumbbell, Apple, MessageCircle, Users, Globe, ShoppingBag } from "lucide-react"
 
 export function FeaturesSection() {
   const features = [
     {
       icon: Dumbbell,
-      title: "Modern Equipment",
-      description: "State-of-the-art machines and free weights for every fitness level and goal.",
+      title: "Exercises",
+      description: "Explore a variety of guided exercises tailored to all fitness levels.",
       color: "text-[#84FF00]",
-      image: "/modern-gym-equipment.jpg",
+      image: "/sport-lifestyle-fitness-male-training.jpg",
     },
     {
-      icon: Users,
-      title: "Expert Trainers",
-      description: "Certified professionals dedicated to helping you achieve your fitness goals.",
-      color: "text-[#FF6B00]",
-      image: "/personal-trainer-coaching.jpg",
-    },
-    {
-      icon: Calendar,
-      title: "Flexible Classes",
-      description: "100+ weekly classes from yoga to HIIT, designed to fit your schedule.",
-      color: "text-[#00D9FF]",
-      image: "/group-fitness-class.jpg",
-    },
-    {
-      icon: TrendingUp,
-      title: "Progress Tracking",
-      description: "Advanced analytics to monitor your improvements and celebrate milestones.",
-      color: "text-[#84FF00]",
-      image: "/fitness-progress-tracking.jpg",
-    },
-    {
-      icon: Award,
+      icon: Apple,
       title: "Nutrition Plans",
-      description: "Personalized meal plans and dietary guidance from certified nutritionists.",
+      description: "Get personalized meal plans designed to match your fitness goals.",
       color: "text-[#FF6B00]",
       image: "/healthy-meal-prep.jpg",
     },
     {
-      icon: Clock,
-      title: "24/7 Access",
-      description: "Train on your schedule with round-the-clock gym access for all members.",
+      icon: MessageCircle,
+      title: "Chatbot",
+      description: "AI-powered assistant to guide you through workouts  , diet plans and  answer your questions.",
       color: "text-[#00D9FF]",
-      image: "/24-hour-gym-access.jpg",
+      image: "/195.jpg",
+    },
+    {
+      icon: Users,
+      title: "Expert Trainers",
+      description: "Certified professionals ready to help you achieve your best shape.",
+      color: "text-[#84FF00]",
+      image: "/personal-trainer-coaching.jpg",
+    },
+    {
+      icon: Globe,
+      title: "Community",
+      description: "Join a strong fitness community and connect with other athletes.",
+      color: "text-[#FF6B00]",
+      image: "/group-fitness-class.jpg",
+    },
+    {
+      icon: ShoppingBag,
+      title: "Check our Sales Product",
+      description: "Explore our exclusive fitness products, supplements, and accessories.",
+      color: "text-[#00D9FF]",
+      image: "/OLS5860.jpg",
     },
   ]
 
@@ -66,12 +66,14 @@ export function FeaturesSection() {
             >
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src={feature.image || `/placeholder.svg?height=200&width=400&query=${feature.title}`}
+                  src={feature.image}
                   alt={feature.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 will-change-transform"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                {/* Icon overlay */}
+
+                {/* 🎯 FIXED OVERLAY — prevents shaking on hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none will-change-auto transform-none" />
+
                 <div className="absolute bottom-4 left-4">
                   <div className="bg-black/80 backdrop-blur-sm p-3 rounded-lg">
                     <feature.icon
@@ -81,7 +83,6 @@ export function FeaturesSection() {
                 </div>
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#84FF00] transition-colors duration-300">
                   {feature.title}

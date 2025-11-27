@@ -87,11 +87,7 @@ export function Footer() {
                   Personal Training
                 </Link>
               </li>
-              <li>
-                <Link href="/programs" className="text-sm text-gray-400 hover:text-[#84FF00] transition-colors">
-                  Group Classes
-                </Link>
-              </li>
+             
               <li>
                 <Link href="/shop" className="text-sm text-gray-400 hover:text-[#84FF00] transition-colors">
                   Shop

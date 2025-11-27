@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat.variable} ${poppins.variable} antialiased scroll-smooth`}>
       <body className="font-sans overflow-x-hidden">
         {children}
-        <AIChatbotWidget />
+        
       </body>
     </html>
   )

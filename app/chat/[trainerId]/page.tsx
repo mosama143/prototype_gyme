@@ -1,22 +1,34 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import Link from "next/link"
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Send, Paperclip, Phone, Video, Info, ArrowLeft, Circle } from "lucide-react"
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import {
+  Send,
+  Paperclip,
+  Phone,
+  Video,
+  Info,
+  ArrowLeft,
+  Circle,
+} from "lucide-react";
 
 interface Message {
-  id: string
-  sender: "user" | "trainer"
-  content: string
-  timestamp: string
-  avatar: string
-  name: string
+  id: string;
+  sender: "user" | "trainer";
+  content: string;
+  timestamp: string;
+  avatar: string;
+  name: string;
 }
 
-export default function ChatPage({ params }: { params: { trainerId: string } }) {
+export default function ChatPage({
+  params,
+}: {
+  params: { trainerId: string };
+}) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -37,7 +49,8 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
     {
       id: "3",
       sender: "trainer",
-      content: "Great! Let's work on your bench press form. I want to focus on your chest and triceps today.",
+      content:
+        "Great! Let's work on your bench press form. I want to focus on your chest and triceps today.",
       timestamp: "10:32 AM",
       avatar: "/male-trainer-strength.jpg",
       name: "Alex Morgan",
@@ -50,27 +63,27 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
       avatar: "/fit-woman-smiling-in-gym.jpg",
       name: "You",
     },
-  ])
+  ]);
 
-  const [newMessage, setNewMessage] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [newMessage, setNewMessage] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to latest message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   // Simulate trainer typing and response
   useEffect(() => {
     const typingTimer = setTimeout(() => {
       if (newMessage === "") {
-        setIsTyping(false)
+        setIsTyping(false);
       }
-    }, 2000)
+    }, 2000);
 
-    return () => clearTimeout(typingTimer)
-  }, [newMessage])
+    return () => clearTimeout(typingTimer);
+  }, [newMessage]);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -78,33 +91,39 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
         id: Date.now().toString(),
         sender: "user",
         content: newMessage,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
         avatar: "/fit-woman-smiling-in-gym.jpg",
         name: "You",
-      }
+      };
 
-      setMessages((prev) => [...prev, userMessage])
-      setNewMessage("")
+      setMessages((prev) => [...prev, userMessage]);
+      setNewMessage("");
 
       // Simulate trainer response
-      setIsTyping(true)
+      setIsTyping(true);
       setTimeout(() => {
         const trainerMessage: Message = {
           id: (Date.now() + 1).toString(),
           sender: "trainer",
           content: "That's great! Let's work on that together.",
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          timestamp: new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
           avatar: "/male-trainer-strength.jpg",
           name: "Alex Morgan",
-        }
-        setMessages((prev) => [...prev, trainerMessage])
-        setIsTyping(false)
-      }, 1500)
+        };
+        setMessages((prev) => [...prev, trainerMessage]);
+        setIsTyping(false);
+      }, 1500);
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className="min-h-screen bg-black flex flex-col pt-25   pb-25">
       <Navigation />
       <div className="flex-1 flex">
         {/* Chat Container */}
@@ -135,13 +154,25 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
               </div>
 
               <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost" className="text-white hover:text-[#84FF00] hover:bg-white/10">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-white hover:text-[#84FF00] hover:bg-white/10"
+                >
                   <Phone className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-white hover:text-[#84FF00] hover:bg-white/10">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-white hover:text-[#84FF00] hover:bg-white/10"
+                >
                   <Video className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-white hover:text-[#84FF00] hover:bg-white/10">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="text-white hover:text-[#84FF00] hover:bg-white/10"
+                >
                   <Info className="h-5 w-5" />
                 </Button>
               </div>
@@ -162,7 +193,11 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
                   alt={message.name}
                   className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                 />
-                <div className={`flex flex-col gap-1 max-w-xs ${message.sender === "user" ? "items-end" : ""}`}>
+                <div
+                  className={`flex flex-col gap-1 max-w-xs ${
+                    message.sender === "user" ? "items-end" : ""
+                  }`}
+                >
                   <span className="text-xs text-gray-400">{message.name}</span>
                   <div
                     className={`rounded-2xl px-4 py-2 ${
@@ -173,7 +208,9 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
                   >
                     <p className="text-sm">{message.content}</p>
                   </div>
-                  <span className="text-xs text-gray-500">{message.timestamp}</span>
+                  <span className="text-xs text-gray-500">
+                    {message.timestamp}
+                  </span>
                 </div>
               </div>
             ))}
@@ -241,8 +278,12 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
               alt="Trainer"
               className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
             />
-            <h3 className="text-xl font-bold text-white text-center">Alex Morgan</h3>
-            <p className="text-[#84FF00] text-sm text-center font-medium">Strength & Conditioning</p>
+            <h3 className="text-xl font-bold text-white text-center">
+              Alex Morgan
+            </h3>
+            <p className="text-[#84FF00] text-sm text-center font-medium">
+              Strength & Conditioning
+            </p>
           </div>
 
           <div className="flex-1 p-6 space-y-6 overflow-y-auto">
@@ -251,10 +292,15 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
               <p className="text-white">8 years</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase mb-2">Certifications</p>
+              <p className="text-xs text-gray-500 uppercase mb-2">
+                Certifications
+              </p>
               <div className="flex flex-wrap gap-2">
                 {["NASM-CPT", "CSCS"].map((cert) => (
-                  <span key={cert} className="bg-[#84FF00]/20 text-[#84FF00] text-xs px-2 py-1 rounded">
+                  <span
+                    key={cert}
+                    className="bg-[#84FF00]/20 text-[#84FF00] text-xs px-2 py-1 rounded"
+                  >
                     {cert}
                   </span>
                 ))}
@@ -262,7 +308,9 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
             </div>
             <div>
               <p className="text-xs text-gray-500 uppercase mb-2">Bio</p>
-              <p className="text-gray-300 text-sm">Specializing in powerlifting and functional strength training.</p>
+              <p className="text-gray-300 text-sm">
+                Specializing in powerlifting and functional strength training.
+              </p>
             </div>
 
             <div className="border-t border-white/10 pt-6">
@@ -275,7 +323,6 @@ export default function ChatPage({ params }: { params: { trainerId: string } }) 
           </div>
         </div>
       </div>
-      <Footer />
     </div>
-  )
+  );
 }

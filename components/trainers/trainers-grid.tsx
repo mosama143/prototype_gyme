@@ -22,7 +22,7 @@ export function TrainersGrid() {
     {
       id: "sarah-chen",
       name: "Sarah Chen",
-      specialty: "Yoga & Flexibility",
+      specialty: "Cardio & HIIT",
       image: "/female-trainer-yoga.jpg",
       certifications: ["RYT-500", "ACE"],
       experience: "6 years",
@@ -48,7 +48,7 @@ export function TrainersGrid() {
     {
       id: "emily-rodriguez",
       name: "Emily Rodriguez",
-      specialty: "Nutrition & Wellness",
+      specialty: "Wellness & Recovery",
       image: "/female-trainer-nutrition.jpg",
       certifications: ["RD", "NASM-CPT"],
       experience: "7 years",
@@ -62,7 +62,7 @@ export function TrainersGrid() {
     {
       id: "david-kim",
       name: "David Kim",
-      specialty: "CrossFit & Functional",
+      specialty: "Strength Training",
       image: "/male-trainer-crossfit.jpg",
       certifications: ["CF-L2", "USAW"],
       experience: "9 years",
@@ -75,7 +75,7 @@ export function TrainersGrid() {
     {
       id: "jessica-williams",
       name: "Jessica Williams",
-      specialty: "Pilates & Core",
+      specialty: "CrossFit & Functional",
       image: "/female-trainer-pilates.jpg",
       certifications: ["PMA-CPT", "ACE"],
       experience: "5 years",

@@ -41,7 +41,7 @@ export function CTASection() {
                 variant="outline"
                 className="border-2 border-black text-black hover:bg-black hover:text-white font-bold text-lg px-8 py-6 h-auto bg-transparent"
               >
-                Schedule a Tour
+                Contact
               </Button>
             </Link>
           </div>
