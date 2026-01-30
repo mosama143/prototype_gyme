@@ -64,7 +64,6 @@ export function BlogPost({ post }: BlogPostProps) {
         </div>
       </section>
 
-      {/* Featured Image */}
       <section className="container mx-auto px-4 mb-12">
         <div className="max-w-4xl mx-auto">
           <div className="aspect-video rounded-2xl overflow-hidden">

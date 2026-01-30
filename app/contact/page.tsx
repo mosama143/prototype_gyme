@@ -1,192 +1,271 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import { useState } from "react";
+import { motion, type Variants } from "framer-motion";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { useToast } from "@/hooks/use-toast"
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+
+/* ================== ANIMATION VARIANTS ================== */
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const fadeDown: Variants = {
+  hidden: { opacity: 0, y: -50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const fadeLeft: Variants = {
+  hidden: { opacity: 0, x: -60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const fadeRight: Variants = {
+  hidden: { opacity: 0, x: 60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const stagger: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+/* ================== PAGE ================== */
 
 export default function ContactPage() {
-  const { toast } = useToast()
+  const { toast } = useToast();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
-  })
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     toast({
       title: "Message sent!",
       description: "We'll get back to you within 24 hours.",
-    })
-    setFormData({ name: "", email: "", phone: "", message: "" })
-  }
+    });
+    setFormData({ name: "", email: "", phone: "", message: "" });
+  };
 
   return (
     <div className="min-h-screen bg-black">
       <Navigation />
-      <main className="pt-16">
-        {/* Hero */}
-        <section className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-[#0A0A0A] to-black" />
 
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-5xl md:text-7xl font-black text-white mb-6">
-                GET IN <span className="text-[#84FF00]">TOUCH</span>
-              </h1>
-              <p className="text-xl text-gray-400 leading-relaxed">
-                Have questions? Want to schedule a tour? We're here to help you start your fitness journey.
-              </p>
-            </div>
+      <main className="pt-16">
+        {/* ================== HERO ================== */}
+        <section className="relative py-32 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/portrait-person-entrapped-by-cybersickness-using-smart-device-too-long.jpg')" }}
+          />
+          <div className="absolute inset-0 bg-black/625" />
+
+          <div className="relative z-10 container mx-auto px-4 text-center">
+            <motion.h1
+              variants={fadeDown}
+              initial="hidden"
+              animate="visible"
+              className="text-5xl md:text-7xl font-black text-white mb-6"
+              style={{
+                textShadow:
+                  "0 0 25px rgba(132,255,0,0.6), 0 0 60px rgba(132,255,0,0.4)",
+              }}
+            >
+              GET IN <span className="text-[#84FF00]">TOUCH</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              className="text-xl text-gray-300 max-w-3xl mx-auto"
+            >
+              Have questions? Want to schedule a tour? We're here to help you
+              start your fitness journey.
+            </motion.p>
           </div>
         </section>
 
-        {/* Contact Info & Form */}
-        <section className="py-16 bg-black">
+        {/* ================== CONTENT ================== */}
+        <section className="py-20 bg-black">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-              {/* Contact Info */}
-              <div>
-                <h2 className="text-3xl font-black text-white mb-8">Contact Information</h2>
+            <div className="grid lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
+              {/* ================== INFO + MAP ================== */}
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <motion.h2
+                  variants={fadeLeft}
+                  className="text-3xl font-black text-white mb-8"
+                >
+                  Contact Information
+                </motion.h2>
+
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
+                  <motion.div variants={fadeLeft} className="flex gap-4">
                     <div className="bg-[#84FF00]/10 p-3 rounded-lg">
                       <MapPin className="h-6 w-6 text-[#84FF00]" />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-white mb-1">Address</h3>
-                      <p className="text-gray-400">
-                        123 Fitness Street
-                        <br />
-                        New York, NY 10001
-                      </p>
-                    </div>
-                  </div>
+                    <p className="text-gray-400">
+                      GYM Location – Cairo, Egypt
+                    </p>
+                  </motion.div>
 
-                  <div className="flex items-start gap-4">
+                  <motion.div variants={fadeLeft} className="flex gap-4">
                     <div className="bg-[#84FF00]/10 p-3 rounded-lg">
                       <Phone className="h-6 w-6 text-[#84FF00]" />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-white mb-1">Phone</h3>
-                      <p className="text-gray-400">+1 (234) 567-890</p>
-                    </div>
-                  </div>
+                    <p className="text-gray-400">+20 1010083896</p>
+                  </motion.div>
 
-                  <div className="flex items-start gap-4">
+                  <motion.div variants={fadeLeft} className="flex gap-4">
                     <div className="bg-[#84FF00]/10 p-3 rounded-lg">
                       <Mail className="h-6 w-6 text-[#84FF00]" />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-white mb-1">Email</h3>
-                      <p className="text-gray-400">info@fitzone.com</p>
-                    </div>
-                  </div>
+                    <p className="text-gray-400">info@gym.com</p>
+                  </motion.div>
 
-                  <div className="flex items-start gap-4">
+                  <motion.div variants={fadeLeft} className="flex gap-4">
                     <div className="bg-[#84FF00]/10 p-3 rounded-lg">
                       <Clock className="h-6 w-6 text-[#84FF00]" />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-white mb-1">Hours</h3>
-                      <p className="text-gray-400">
-                        Monday - Friday: 5:00 AM - 11:00 PM
-                        <br />
-                        Saturday - Sunday: 6:00 AM - 10:00 PM
-                      </p>
-                    </div>
-                  </div>
+                    <p className="text-gray-400">
+                      Daily: 6:00 AM – 12:00 AM
+                    </p>
+                  </motion.div>
                 </div>
 
-                {/* Map */}
-                <div className="mt-8 aspect-video bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-                  <img
-                    src="/placeholder.svg?height=400&width=600"
-                    alt="Map location"
-                    className="w-full h-full object-cover"
+                {/* 🗺️ MAP */}
+                <motion.div
+                  variants={fadeUp}
+                  className="mt-10 aspect-video rounded-xl overflow-hidden border border-white/10"
+                >
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1848.919017867605!2d30.696311879766146!3d30.76566320301864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f63ab0a29a1291%3A0x5bafb4a11dc339a3!2zUU04VytIRlHYjCDYqNmK2KjYp9mG2Iwg2YXYsdmD2LIg2YPZiNmFINit2YXYp9iv2KnYjCDZhdit2KfZgdi42Kkg2KfZhNio2K3Zitix2KkgNTc2NDYwNw!5e1!3m2!1sar!2seg!4v1769741146738!5m2!1sar!2seg"
+                    width="100%"
+                    height="100%"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full"
                   />
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-              {/* Contact Form */}
-              <div>
-                <h2 className="text-3xl font-black text-white mb-8">Send Us a Message</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-bold text-white mb-2">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#84FF00] focus:outline-none"
-                      required
-                    />
-                  </div>
+              {/* ================== FORM ================== */}
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <motion.h2
+                  variants={fadeRight}
+                  className="text-3xl font-black text-white mb-8"
+                >
+                  Send Us a Message
+                </motion.h2>
 
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-bold text-white mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#84FF00] focus:outline-none"
-                      required
-                    />
-                  </div>
+                <motion.form
+                  onSubmit={handleSubmit}
+                  variants={stagger}
+                  className="space-y-6"
+                >
+                  <motion.input
+                    variants={fadeUp}
+                    placeholder="Name"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-[#84FF00]"
+                    required
+                  />
 
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-bold text-white mb-2">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#84FF00] focus:outline-none"
-                    />
-                  </div>
+                  <motion.input
+                    variants={fadeUp}
+                    placeholder="Email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-[#84FF00]"
+                    required
+                  />
 
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-bold text-white mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      rows={6}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-[#84FF00] focus:outline-none resize-none"
-                      required
-                    />
-                  </div>
+                  <motion.input
+                    variants={fadeUp}
+                    placeholder="Phone"
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-[#84FF00]"
+                  />
 
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full bg-[#84FF00] text-black hover:bg-[#84FF00]/90 font-bold"
-                  >
-                    Send Message
-                  </Button>
-                </form>
-              </div>
+                  <motion.textarea
+                    variants={fadeUp}
+                    placeholder="Message"
+                    rows={6}
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none resize-none focus:border-[#84FF00]"
+                    required
+                  />
+
+                  <motion.div variants={fadeUp}>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full bg-[#84FF00] text-black font-bold hover:bg-[#84FF00]/90"
+                    >
+                      Send Message
+                    </Button>
+                  </motion.div>
+                </motion.form>
+              </motion.div>
             </div>
           </div>
         </section>
       </main>
+
       <Footer />
     </div>
-  )
+  );
 }
